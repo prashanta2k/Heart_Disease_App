@@ -1,59 +1,61 @@
-import streamlit as st
-import pickle 
-st.set_page_config(page_title="Heart Disease app",page_icon=":heart",layout="centered")
-st.title("Heart Disease Prediction Application")
-st.write("This app predicts heart disease based on various parameters")
+import streamlit as st 
+import pickle
 
+st.set_page_config(page_title="Heart Disease Prediction", page_icon=":heart:", layout="centered")  # page configuration
+
+st.title("Heart Disease Prediction App") # title of the app
+st.write("This app predicts the likelihood of heart disease based on various health parameters") #sub heading  
+
+#loading the model
 def load_model():
     return pickle.load(open('heart.pkl','rb'))
 
 model = load_model()
 
-#Input fields
-# 	age	sex	cp	trestbps	chol	fbs	restecg	thalach	exang	oldpeak	slope	ca	thal	
-age  = st.number_input("Age")
-st.write("Age", age)
+# input fields
 
-sex = st.selectbox("Sex",[0,1])
-st.write("Sex",sex)
+age = st.number_input("Age")
+st.write("Age: ", age)
 
-cp = st.selectbox("cp",[0,1,2,3])
-st.write("cp",cp)
+sex = st.selectbox("Sex", [0, 1])
+st.write("Sex: ", sex)
 
-trestbps  = st.number_input("Resting Blood Pressure")
-st.write("tresResting Blood Pressure", trestbps)
+cp = st.selectbox("Chest Pain Type", [0, 1, 2, 3])  
+st.write("Chest Pain Type: ", cp)   
 
-chol  = st.number_input("Serum Cholestrol")
-st.write("cSerum Cholestrol", chol)
+trestbps = st.number_input("Resting Blood Pressure")
+st.write("Resting Blood Pressure: ", trestbps)
 
-fbs  = st.selectbox("Fasting Blood Pressure > 120.0 ",[0,1])
-st.write("Fasting Blood Pressure", fbs)
+chol = st.number_input("Serum Cholesterol")
+st.write("Serum Cholesterol: ", chol)   
 
-restecg  = st.number_input("Resting Electro cardiographic Result")
-st.write("Resting Electro cardiographic Result", restecg)
+fbs = st.selectbox("Fasting Blood Sugar > 120 mg/dl", [0, 1])   
+st.write("Fasting Blood Sugar > 120 mg/dl: ", fbs)
 
-thalach  = st.number_input("Maximum Heart rate achived")
-st.write("Maximum Heart rate achived", thalach)
+restecg = st.selectbox("Resting Electrocardiographic Results", [0, 1, 2])
+st.write("Resting Electrocardiographic Results: ", restecg)
 
-#exang	oldpeak	slope	ca
-exang  = st.selectbox("Excercise Induce Angina",[0,1])
-st.write("Excercise Induce Angina", exang)
+thalach = st.number_input("Maximum Heart Rate Achieved")
+st.write("Maximum Heart Rate Achieved: ", thalach)
 
-oldpeak  = st.number_input("ST depression Induced")
-st.write("ST depression Induced", oldpeak)
+exang = st.selectbox("Exercise Induced Angina", [0, 1])
+st.write("Exercise Induced Angina: ", exang)    
 
-slope  = st.selectbox("Slope",[0,1,2])
-st.write("Slope", slope)
+oldpeak = st.number_input("ST Depression Induced by Exercise Relative to Rest")
+st.write("ST Depression Induced by Exercise Relative to Rest: ", oldpeak)
 
-ca  = st.selectbox("No of major vessels colored by Fluroscopy",[0,1,2,3])
-st.write("No of major vessels colored by Fluroscopy", ca)
+slope = st.selectbox("Slope of the Peak Exercise ST Segment", [0, 1, 2])
+st.write("Slope of the Peak Exercise ST Segment: ", slope)
 
-thal  = st.selectbox("Thalasmea",[0,1,2,3])
-st.write("Thalasmea", thal)
+ca = st.selectbox("Number of Major Vessels Colored by Fluoroscopy", [0, 1, 2, 3])
+st.write("Number of Major Vessels Colored by Fluoroscopy: ", ca)
+
+thal = st.selectbox("Thalassemia", [0, 1, 2, 3])
+st.write("Thalassemia: ", thal)
 
 if st.button("Predict Heart Disease"):
-    input_data = [[age,sex,	cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal]]
-    prediction = model.predict(input_data)
+    input_data = [[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]]
+    prediction = model.predict(input_data)  
     if prediction[0] == 1:
         st.error("The model predicts that you have heart disease. Please consult a doctor for further evaluation.")
     else:
