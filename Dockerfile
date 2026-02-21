@@ -1,5 +1,3 @@
-pankaj
-8:42 PM
 FROM python:3.9
 
 WORKDIR /app
